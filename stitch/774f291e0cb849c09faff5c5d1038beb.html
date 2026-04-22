@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kinetik Sayaç - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed-variant": "#5516be",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#6b38d4",
+                        "on-background": "#171c23",
+                        "surface-container-high": "#e4e8f3",
+                        "surface-tint": "#494bd6",
+                        "surface-container": "#eaeef9",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#23005c",
+                        "surface-variant": "#dee2ed",
+                        "secondary-container": "#8455ef",
+                        "on-tertiary-fixed": "#301400",
+                        "outline-variant": "#c7c4d7",
+                        "on-secondary-container": "#fffbff",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-primary-container": "#fffbff",
+                        "inverse-primary": "#c0c1ff",
+                        "background": "#f8f9ff",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#6063ee",
+                        "on-surface-variant": "#464554",
+                        "on-surface": "#171c23",
+                        "on-primary-fixed": "#07006c",
+                        "tertiary-container": "#b55d00",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "outline": "#767586",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#eff3fe",
+                        "primary": "#4648d4",
+                        "surface-container-highest": "#dee2ed",
+                        "on-tertiary-fixed-variant": "#703700",
+                        "surface-dim": "#d6dae5",
+                        "inverse-on-surface": "#edf1fc",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary": "#904900",
+                        "on-tertiary-container": "#fffbff",
+                        "inverse-surface": "#2c3139",
+                        "primary-fixed": "#e1e0ff",
+                        "tertiary-fixed-dim": "#ffb783",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#e9ddff",
+                        "tertiary-fixed": "#ffdcc5",
+                        "surface": "#f8f9ff",
+                        
+                        // Fallback generic dark mode colors mapping to specific brand tokens if needed, 
+                        // but sticking to defined tokens where possible
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk", "sans-serif"],
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    },
+                    fontSize: {
+                        "display-lg": ["3.5rem", { lineHeight: "4rem" }],
+                        "title-sm": ["0.875rem", { lineHeight: "1.25rem", fontWeight: "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0F172A; /* Overriding to specific requested dark background */
+            color: #f8f9ff;
+        }
+        .dark-surface {
+            background-color: #1E293B;
+        }
+        .dark-surface-container-low {
+            background-color: rgba(30, 41, 59, 0.5); /* 1E293B with opacity */
+        }
+        .text-indigo-400 {
+            color: #818CF8;
+        }
+        .text-indigo-300 {
+            color: #A5B4FC;
+        }
+        .bg-indigo-900-40 {
+            background-color: rgba(49, 46, 129, 0.4);
+        }
+        .border-outline-variant-15 {
+            border-color: rgba(199, 196, 215, 0.15);
+        }
+        .glass-panel {
+            background-color: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        
+        .counter-glow {
+            text-shadow: 0 0 20px rgba(129, 140, 248, 0.4);
+        }
+    </style>
+</head>
+<body class="font-body antialiased flex flex-col h-screen overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="dark-surface flex justify-between items-center w-full px-6 py-4 z-50 fixed top-0 w-full">
+<div class="flex items-center gap-4">
+<h1 class="text-2xl font-bold tracking-tighter text-indigo-400 font-headline">Kinetik Sayaç</h1>
+</div>
+<div class="flex items-center gap-4">
+<button aria-label="Toggle Theme" class="p-2 rounded-full text-slate-400 hover:bg-indigo-900/30 transition-colors">
+<span class="material-symbols-outlined text-indigo-400" data-icon="light_mode">light_mode</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-indigo-900/40 flex items-center justify-center border border-outline-variant-15">
+<span class="font-label font-medium text-indigo-300">KS</span>
+</div>
+</div>
+</header>
+<div class="flex flex-1 pt-[72px] h-full w-full relative">
+<!-- Main Canvas -->
+<main class="flex-1 h-full overflow-y-auto pr-64 p-8 lg:p-12 relative flex flex-col items-center justify-center">
+<!-- Ambient Background Elements -->
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/10 rounded-full blur-[80px] pointer-events-none"></div>
+<!-- Counter Stage -->
+<div class="relative z-10 flex flex-col items-center justify-center w-full max-w-2xl mx-auto space-y-12">
+<!-- Status Pill -->
+<div class="bg-indigo-900/30 text-indigo-300 font-label text-sm px-6 py-2 rounded-full border border-outline-variant-15 flex items-center gap-2 backdrop-blur-md">
+<span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+                    Sayaç Aktif
+                </div>
+<!-- The Counter -->
+<div class="glass-panel p-16 rounded-[2rem] border border-outline-variant-15 w-full flex flex-col items-center justify-center shadow-[0_0_40px_rgba(30,41,59,0.5)]">
+<span class="font-headline font-bold text-[8rem] leading-none tracking-tighter text-white counter-glow tabular-nums">42</span>
+<p class="font-label text-slate-400 mt-4 tracking-widest uppercase text-sm">Güncel Değer</p>
+</div>
+<!-- Actions Container -->
+<div class="flex items-center gap-6">
+<button class="w-16 h-16 rounded-full dark-surface border border-outline-variant-15 flex items-center justify-center text-slate-300 hover:bg-slate-800 transition-all hover:scale-95 active:scale-90">
+<span class="material-symbols-outlined text-2xl" data-icon="remove">remove</span>
+</button>
+<button class="bg-gradient-to-br from-[#4648d4] to-[#6063ee] w-24 h-24 rounded-full flex items-center justify-center text-white shadow-[0_8px_32px_rgba(70,72,212,0.4)] hover:shadow-[0_12px_40px_rgba(70,72,212,0.6)] transition-all hover:scale-105 active:scale-95">
+<span class="material-symbols-outlined text-4xl" data-icon="add">add</span>
+</button>
+<button class="w-16 h-16 rounded-full dark-surface border border-outline-variant-15 flex items-center justify-center text-slate-300 hover:bg-slate-800 transition-all hover:scale-95 active:scale-90">
+<span class="material-symbols-outlined text-2xl" data-icon="refresh">refresh</span>
+</button>
+</div>
+</div>
+</main>
+<!-- SideNavBar -->
+<aside class="fixed right-0 top-0 h-full w-64 bg-[#0B1120] border-l border-outline-variant-15 z-40 flex flex-col pt-20 shadow-[-10px_0_30px_rgba(0,0,0,0.2)]">
+<div class="px-6 py-4 border-b border-outline-variant-15 mb-4">
+<h2 class="font-headline font-bold text-lg text-indigo-400">Geçmiş</h2>
+<p class="font-label text-sm text-slate-400">İşlem kayıtları</p>
+</div>
+<!-- Navigation Tabs (Semantically repurposed as filters/views for the sidebar context based on JSON) -->
+<nav class="flex flex-col gap-2 px-2 mb-8">
+<a class="bg-indigo-900/40 text-indigo-300 rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 font-label text-sm font-medium transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="add_circle">add_circle</span>
+                    Sayaç
+                </a>
+<a class="text-slate-400 hover:bg-slate-800/50 rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 font-label text-sm font-medium transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+                    Ayarlar
+                </a>
+</nav>
+<div class="px-6 py-2">
+<h3 class="font-label text-xs uppercase tracking-wider text-slate-500 mb-4">Son İşlemler</h3>
+<ul class="flex flex-col gap-4">
+<li class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-green-900/30 flex items-center justify-center text-green-400">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+</div>
+<div>
+<p class="font-label text-sm text-slate-200">Artırma</p>
+<p class="font-label text-xs text-slate-500">2 dk önce</p>
+</div>
+</div>
+<span class="font-headline text-sm text-slate-300 font-bold">42</span>
+</li>
+<li class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-green-900/30 flex items-center justify-center text-green-400">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+</div>
+<div>
+<p class="font-label text-sm text-slate-200">Artırma</p>
+<p class="font-label text-xs text-slate-500">15 dk önce</p>
+</div>
+</div>
+<span class="font-headline text-sm text-slate-300 font-bold">41</span>
+</li>
+<li class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-red-900/30 flex items-center justify-center text-red-400">
+<span class="material-symbols-outlined text-sm" data-icon="remove">remove</span>
+</div>
+<div>
+<p class="font-label text-sm text-slate-200">Azaltma</p>
+<p class="font-label text-xs text-slate-500">1 saat önce</p>
+</div>
+</div>
+<span class="font-headline text-sm text-slate-300 font-bold">40</span>
+</li>
+<li class="flex items-center justify-between group cursor-pointer opacity-50">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-indigo-900/30 flex items-center justify-center text-indigo-400">
+<span class="material-symbols-outlined text-sm" data-icon="refresh">refresh</span>
+</div>
+<div>
+<p class="font-label text-sm text-slate-200">Sıfırlama</p>
+<p class="font-label text-xs text-slate-500">Dün</p>
+</div>
+</div>
+<span class="font-headline text-sm text-slate-300 font-bold">0</span>
+</li>
+</ul>
+</div>
+<div class="mt-auto p-4 border-t border-outline-variant-15">
+<button class="w-full py-2 px-4 rounded-lg bg-indigo-900/20 text-indigo-400 font-label text-sm border border-indigo-500/30 hover:bg-indigo-900/40 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+                    Dışa Aktar
+                </button>
+</div>
+</aside>
+</div>
+</body></html>
